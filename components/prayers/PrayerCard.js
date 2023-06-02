@@ -4,12 +4,10 @@ import { Card } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Link from 'next/link';
 import { deletePrayer } from '../../utils/data/prayerData';
-import { useAuth } from '../../utils/context/authContext';
 
 export default function PrayerCard({
   firstName, lastName, onUpdate, id, pubDate, content,
 }) {
-  const { user } = useAuth();
   const deleteThisPrayer = () => {
     if (window.confirm('Delete?')) {
       deletePrayer(id).then(() => onUpdate());
