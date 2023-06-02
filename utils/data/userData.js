@@ -2,17 +2,29 @@ import { clientCredentials } from '../client';
 
 const dbUrl = clientCredentials.databaseURL;
 
-const getSingleUser = (userId) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/users/${userId}`).then((response) => response.json())
+const getSingleUser = (id) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/users/${id}`).then((response) => response.json())
     .then((data) => {
       resolve({
         id: Number(data.id),
         uid: data.uid,
-        firstName: data.first_name,
-        lastName: data.last_name,
-        profileImageUrl: data.profile_image_url,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        profile_image_url: data.profile_image_url,
       });
     }).catch((error) => reject(error));
+});
+
+const createUser = (user) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/users`, {
+    method: 'POST',
+    body: JSON.stringify(user),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((resp) => resolve(resp.json()))
+    .catch((error) => reject(error));
 });
 
 const updateUser = (userObj, userId) => new Promise((resolve, reject) => {
@@ -30,8 +42,8 @@ const updateUser = (userObj, userId) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const deleteUser = (userId) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/users/${userId}`, {
+const deleteUser = (id) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/users/${id}`, {
     method: 'DELETE',
   })
     .then(resolve)
@@ -39,5 +51,5 @@ const deleteUser = (userId) => new Promise((resolve, reject) => {
 });
 
 export {
-  getSingleUser, updateUser, deleteUser,
+  getSingleUser, updateUser, deleteUser, createUser,
 };

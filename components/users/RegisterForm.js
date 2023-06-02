@@ -11,7 +11,6 @@ import { registerUser } from '../../utils/auth'; // Update with path to register
 const initialState = {
   firstName: '',
   lastName: '',
-  createdOn: '',
   profileImageUrl: '',
 };
 // eslint-disable-next-line no-unused-vars
@@ -29,7 +28,7 @@ function RegisterForm({ user, onUpdate }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (user.id) {
-      updateUser(formData, user.id);
+      updateUser(user.id, formData);
       router.push(`../../users/${user.id}`);
     } else {
       registerUser(user, formData).then(() => user.uid);
@@ -69,7 +68,7 @@ function RegisterForm({ user, onUpdate }) {
 
 RegisterForm.propTypes = {
   user: PropTypes.shape({
-    uid: PropTypes.string.isRequired,
+    uid: PropTypes.string,
     id: PropTypes.number,
   }).isRequired,
   onUpdate: PropTypes.func,

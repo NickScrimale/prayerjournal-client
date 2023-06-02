@@ -4,10 +4,13 @@ import { Card } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Link from 'next/link';
 import { deleteUser } from '../../utils/data/userData';
+// import { signOut } from '../../utils/auth';
+import { useAuth } from '../../utils/context/authContext';
 
 export default function UserCard({
-  firstName, lastName, id, profileImageUrl, onUpdate,
+  firstName, lastName, profileImageUrl, id, onUpdate,
 }) {
+  const { user } = useAuth();
   const deleteThisUser = () => {
     if (window.confirm('Delete?')) {
       deleteUser(id).then(() => onUpdate());
@@ -21,10 +24,7 @@ export default function UserCard({
         <Card.Body>
           <Card.Title>{firstName} {lastName}</Card.Title>
           <Card.Img variant="top" src={profileImageUrl} alt={firstName} style={{ height: '200px' }} />
-          <Link href={`/user/${id}`} passHref>
-            <Button variant="primary" className="m-2">VIEW</Button>
-          </Link>
-          <Link href={`/user/edit/${id}`} passHref>
+          <Link href={`/users/edit/${user.id}`} passHref>
             <Button variant="info">EDIT</Button>
           </Link>
           <Button variant="danger" onClick={deleteThisUser} className="m-2">

@@ -7,7 +7,6 @@ export default function ViewUser() {
   const [viewUsers, setViewUser] = useState([]);
   const router = useRouter();
   const { id } = router.query;
-  console.warn(viewUsers.firstName);
 
   useEffect(() => {
     getSingleUser(id).then(setViewUser);
@@ -19,12 +18,13 @@ export default function ViewUser() {
         key={viewUsers}
         // userCardObj={getUserById}
         id={viewUsers.id}
-        firstName={viewUsers.firstName}
-        lastName={viewUsers.lastName}
+        first_name={viewUsers.first_name}
+        last_name={viewUsers.last_name}
         uid={viewUsers.uid}
-        profileImageUrl={viewUsers.profileImageUrl}
+        profile_image_url={viewUsers.profile_image_url}
         onUpdate={getSingleUser}
       />
     </div>
+
   );
 }

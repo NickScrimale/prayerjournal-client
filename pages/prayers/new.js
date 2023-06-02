@@ -1,11 +1,11 @@
 import React from 'react';
+import PrayerForm from '../../components/prayers/PrayerForm';
 import { useAuth } from '../../utils/context/authContext';
-import VerseForm from '../../components/verses/VerseForm';
 
-export default function AddVerse() {
+export default function New() {
   const { user } = useAuth();
 
   return (
-    <VerseForm user={user} />
+    <PrayerForm user={user} />
   );
 }

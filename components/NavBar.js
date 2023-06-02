@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+// import PropTypes from 'prop-types';
 import React from 'react';
 import Link from 'next/link';
 import {
@@ -8,8 +9,10 @@ import {
   Button,
 } from 'react-bootstrap';
 import { signOut } from '../utils/auth';
+import { useAuth } from '../utils/context/authContext';
 
 export default function NavBar() {
+  const { id } = useAuth();
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
@@ -22,6 +25,7 @@ export default function NavBar() {
             <Link passHref href="/">
               <Nav.Link>Verses</Nav.Link>
             </Link>
+            {/* <Link passHref href={`/users/${id}`}> */}
             <Link passHref href="/users">
               <Nav.Link>Profile</Nav.Link>
             </Link>
@@ -37,3 +41,9 @@ export default function NavBar() {
     </Navbar>
   );
 }
+
+// NavBar.propTypes = {
+//   user: PropTypes.shape({
+//     id: PropTypes.number.isRequired,
+//   }).isRequired,
+// };

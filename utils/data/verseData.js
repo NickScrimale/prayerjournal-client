@@ -8,29 +8,36 @@ const getVerses = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const getSingleVerse = (verseId) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/verses/${verseId}`).then((response) => response.json())
-    .then((data) => {
-      resolve({
-        id: data.id,
-        userId: data.user_id,
-        versionId: data.version_id,
-        verse: data.verse,
-        content: data.content,
-      });
-    }).catch((error) => reject(error));
+// const getSingleVerse = (verseId) => new Promise((resolve, reject) => {
+//   fetch(`${dbUrl}/verses/${verseId}`).then((response) => response.json())
+//     .then((data) => {
+//       resolve({
+//         id: data.id,
+//         userId: data.user_id,
+//         versionId: data.version_id,
+//         verse: data.verse,
+//         content: data.content,
+//       });
+//     }).catch((error) => reject(error));
+// });
+
+const getSingleVerse = (id) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/verses/${id}`)
+    .then((response) => response.json())
+    .then(resolve)
+    .catch(reject);
 });
 
 const createVerse = (verseObj, user) => new Promise((resolve, reject) => {
-  const post = {
-    version_id: Number(verseObj.versionId),
+  const verse = {
+    version_id: Number(verseObj.version_id),
     verse: verseObj.verse,
     content: verseObj.content,
-    user_id: user.id,
+    uid: user.id,
   };
   fetch(`${dbUrl}/verses`, {
     method: 'POST',
-    body: JSON.stringify(post),
+    body: JSON.stringify(verse),
     headers: {
       'Content-Type': 'application/json',
     },
@@ -49,11 +56,10 @@ const deleteVerse = (verseId) => new Promise((resolve, reject) => {
 
 const updateVerse = (user, verse, verseId) => new Promise((resolve, reject) => {
   const verseObj = {
-    version_id: Number(verse.versionId.id),
+    version_id: Number(verse.version_id.id),
     verse: verse.verse,
     content: verse.content,
-    publication_date: verse.pub_date,
-    user_id: user.id,
+    uid: user.id,
   };
   fetch(`${dbUrl}/verses/${verseId}`, {
     method: 'PUT',
