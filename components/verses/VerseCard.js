@@ -6,10 +6,12 @@ import Button from 'react-bootstrap/Button';
 import Link from 'next/link';
 import { deleteVerse } from '../../utils/data/verseData';
 import { createUserLike, deleteUserLike } from '../../utils/data/userLikeData';
+import { useAuth } from '../../utils/context/authContext';
 
 export default function VerseCard({
   version, onUpdate, verse, id, firstName, lastName, content, userLikesArray,
 }) {
+  const { userId } = useAuth();
   const deleteThisVerse = () => {
     if (window.confirm('Delete?')) {
       deleteVerse(id).then(() => onUpdate());
@@ -17,11 +19,16 @@ export default function VerseCard({
     }
   };
 
-  const handleCheckChange = (checked) => {
-    if (checked === true) {
-      createUserLike();
+  const handleCheckChange = (event) => {
+    const { checked } = event.target;
+    console.warn(userId);
+    if (checked) {
+      createUserLike({ verseId: id, userId });
     } else {
-      deleteUserLike();
+      const userLike = userLikesArray.find((ul) => ul.verse_id === id);
+      if (userLike) {
+        deleteUserLike(userLike.id);
+      }
     }
   };
 
@@ -47,7 +54,7 @@ export default function VerseCard({
                   checkedIcon={<Favorite />}
                   name="checkedH"
                   checked={!!userLikesArray.find((ul) => id === ul.verse_id)}
-                  onClick={handleCheckChange()}
+                  onChange={handleCheckChange}
                 />
                 )}
             />

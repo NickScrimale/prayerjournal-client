@@ -7,28 +7,23 @@ const getLikeByUser = (id) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const deleteUserLike = (userLikeId) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/userlikes/${userLikeId}`, {
-    method: 'DELETE',
-  })
-    .then(resolve)
-    .catch(reject);
+const deleteUserLike = (userLikeId) => fetch(`${clientCredentials.databaseURL}/userlikes/${userLikeId}`, {
+  method: 'DELETE',
 });
 
-const createUserLike = (userLike) => new Promise((resolve, reject) => {
+const createUserLike = (userLike) => {
   const userLikeObj = {
     verse_id: Number(userLike.verseId),
-    uid: String(userLike.uid),
+    user_id: Number(userLike.userId),
   };
-  fetch(`${clientCredentials.databaseURL}/userlikes`, {
+  return fetch(`${clientCredentials.databaseURL}/userlikes`, {
     method: 'POST',
     body: JSON.stringify(userLikeObj),
     headers: {
-      'content-type': 'application/json',
+      'Content-Type': 'application/json',
     },
   })
-    .then((response) => resolve(response.json()))
-    .catch((error) => reject(error));
-});
+    .then((response) => response.json());
+};
 
 export { getLikeByUser, deleteUserLike, createUserLike };

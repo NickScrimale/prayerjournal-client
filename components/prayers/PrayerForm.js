@@ -37,7 +37,8 @@ function PrayerForm({ object, user }) {
         .then(() => router.push('/prayers'));
     } else {
       const payload = { ...formInput };
-      createPrayer(payload, user).then(setFormInput(initialState));
+      createPrayer(payload, user).then(setFormInput(initialState))
+        .then(() => router.push('/prayers'));
     }
   };
 

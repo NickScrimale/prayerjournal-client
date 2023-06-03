@@ -8,7 +8,10 @@ import { createVerse, getSingleVerse, updateVerse } from '../../utils/data/verse
 const initialState = {
   verse: '',
   content: '',
-  version_id: '',
+  version_id: {
+    id: 0,
+    label: '',
+  },
 };
 
 export default function VerseForm({ verseObj, user }) {
@@ -27,13 +30,28 @@ export default function VerseForm({ verseObj, user }) {
     }
   }, [verseObj]);
 
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   if (name === 'version_id') {
+  //     // setSelectedVersion(value);
+  //     setCurrentVerse((prevState) => ({
+  //       ...prevState,
+  //       [name]: versions.find((v) => v.id === parseInt(value, 10)),
+  //     }));
+  //   } else {
+  //     setCurrentVerse((prevState) => ({
+  //       ...prevState,
+  //       [name]: value,
+  //     }));
+  //   }
+  // };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === 'version_id') {
-      // setSelectedVersion(value);
       setCurrentVerse((prevState) => ({
         ...prevState,
-        [name]: versions.find((v) => v.id === parseInt(value, 10)),
+        [name]: versions.find((v) => v.id === parseInt(value, 10)) || initialState.version_id,
       }));
     } else {
       setCurrentVerse((prevState) => ({
@@ -42,15 +60,16 @@ export default function VerseForm({ verseObj, user }) {
       }));
     }
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.warn('currentVerse.version_id:', currentVerse.version_id);
     if (verseObj.id) {
       updateVerse(user, currentVerse, verseObj.id)
         .then(() => router.push('/'));
     } else {
       const payload = { ...currentVerse };
-      createVerse(payload, user).then(setCurrentVerse(initialState));
+      createVerse(payload, user).then(setCurrentVerse(initialState))
+        .then(() => router.push('/'));
     }
   };
 
@@ -73,7 +92,9 @@ export default function VerseForm({ verseObj, user }) {
           ))}
         </Form.Select>
       </Form.Group>
-      <Button type="submit">{verseObj.id ? 'Update' : 'Create'} Verse</Button>
+      <Button type="submit" disabled={!currentVerse.version_id}>
+        {verseObj.id ? 'Update' : 'Create'} Verse
+      </Button>
     </Form>
   );
 }
