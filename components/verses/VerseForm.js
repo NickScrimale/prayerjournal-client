@@ -62,7 +62,6 @@ export default function VerseForm({ verseObj, user }) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.warn('currentVerse.version_id:', currentVerse.version_id);
     if (verseObj.id) {
       updateVerse(user, currentVerse, verseObj.id)
         .then(() => router.push('/'));
@@ -70,6 +69,7 @@ export default function VerseForm({ verseObj, user }) {
       const payload = { ...currentVerse };
       createVerse(payload, user).then(setCurrentVerse(initialState))
         .then(() => router.push('/'));
+      console.warn(payload);
     }
   };
 

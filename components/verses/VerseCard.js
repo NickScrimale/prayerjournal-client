@@ -21,9 +21,9 @@ export default function VerseCard({
 
   const handleCheckChange = (event) => {
     const { checked } = event.target;
-    console.warn(userId);
     if (checked) {
-      createUserLike({ verseId: id, userId });
+      createUserLike({ verseId: id, ...userId });
+      console.warn(userId);
     } else {
       const userLike = userLikesArray.find((ul) => ul.verse_id === id);
       if (userLike) {

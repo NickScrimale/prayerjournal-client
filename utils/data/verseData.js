@@ -30,7 +30,7 @@ const getSingleVerse = (id) => new Promise((resolve, reject) => {
 
 const createVerse = (verseObj, user) => new Promise((resolve, reject) => {
   const verse = {
-    version_id: Number(verseObj.version_id),
+    version_id: verseObj.version_id.id,
     verse: verseObj.verse,
     content: verseObj.content,
     uid: user.id,
