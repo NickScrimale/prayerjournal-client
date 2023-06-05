@@ -11,7 +11,7 @@ import { useAuth } from '../../utils/context/authContext';
 export default function VerseCard({
   version, onUpdate, verse, id, firstName, lastName, content, userLikesArray,
 }) {
-  const { userId } = useAuth();
+  const { user } = useAuth();
   const deleteThisVerse = () => {
     if (window.confirm('Delete?')) {
       deleteVerse(id).then(() => onUpdate());
@@ -22,8 +22,8 @@ export default function VerseCard({
   const handleCheckChange = (event) => {
     const { checked } = event.target;
     if (checked) {
-      createUserLike({ verseId: id, ...userId });
-      console.warn(userId);
+      createUserLike({ verseId: id, userId: user.id });
+      console.warn(user.id);
     } else {
       const userLike = userLikesArray.find((ul) => ul.verse_id === id);
       if (userLike) {
