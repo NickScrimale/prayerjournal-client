@@ -32,6 +32,7 @@ function RegisterForm({ user, onUpdate }) {
       router.push(`../../users/${user.id}`);
     } else {
       registerUser(user, formData).then(() => user.uid);
+      router.push('/');
     }
   };
 

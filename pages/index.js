@@ -10,12 +10,21 @@ function Home() {
   const { user } = useAuth();
   const [userLikesArray, setUserLikesArray] = useState([]);
   const [Verses, setVerses] = useState([]);
-  useEffect(() => {
+
+  const loadVerses = () => {
     getVerses().then((setVerses));
-  }, []);
+  };
 
   useEffect(() => {
+    loadVerses();
+  }, []);
+
+  const loadUserLike = () => {
     getLikeByUser(user.id).then(setUserLikesArray);
+  };
+
+  useEffect(() => {
+    loadUserLike();
   }, [user]);
 
   return (
@@ -34,7 +43,8 @@ function Home() {
           lastName={user.last_name}
           version={Verse.version_id.label}
           userLikesArray={userLikesArray}
-          onUpdate={getVerses}
+          onUpdate={loadVerses}
+          onLikeUpdate={loadUserLike}
         />
       ))}
     </article>

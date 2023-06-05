@@ -9,25 +9,24 @@ import { createUserLike, deleteUserLike } from '../../utils/data/userLikeData';
 import { useAuth } from '../../utils/context/authContext';
 
 export default function VerseCard({
-  version, onUpdate, verse, id, firstName, lastName, content, userLikesArray,
+  version, onUpdate, verse, id, firstName, lastName, content, userLikesArray, onLikeUpdate,
 }) {
   const { user } = useAuth();
   const deleteThisVerse = () => {
     if (window.confirm('Delete?')) {
       deleteVerse(id).then(() => onUpdate());
-      window.location.reload();
     }
   };
 
   const handleCheckChange = (event) => {
     const { checked } = event.target;
     if (checked) {
-      createUserLike({ verseId: id, userId: user.id });
+      createUserLike({ verseId: id, userId: user.id }).then(() => onLikeUpdate());
       console.warn(user.id);
     } else {
       const userLike = userLikesArray.find((ul) => ul.verse_id === id);
       if (userLike) {
-        deleteUserLike(userLike.id);
+        deleteUserLike(userLike.id).then(() => onLikeUpdate());
       }
     }
   };
@@ -85,4 +84,5 @@ VerseCard.propTypes = {
   version: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
   userLikesArray: PropTypes.arrayOf(Object).isRequired,
+  onLikeUpdate: PropTypes.func.isRequired,
 };
