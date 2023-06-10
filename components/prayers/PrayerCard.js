@@ -11,7 +11,7 @@ export default function PrayerCard({
   const deleteThisPrayer = () => {
     if (window.confirm('Delete?')) {
       deletePrayer(id).then(() => onUpdate());
-      window.location.reload();
+      // window.location.reload();
     }
   };
   return (

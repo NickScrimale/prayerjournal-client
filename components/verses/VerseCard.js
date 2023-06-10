@@ -22,7 +22,6 @@ export default function VerseCard({
     const { checked } = event.target;
     if (checked) {
       createUserLike({ verseId: id, userId: user.id }).then(() => onLikeUpdate());
-      console.warn(user.id);
     } else {
       const userLike = userLikesArray.find((ul) => ul.verse_id === id);
       if (userLike) {

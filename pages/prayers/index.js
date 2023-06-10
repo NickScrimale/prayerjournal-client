@@ -8,9 +8,18 @@ import { useAuth } from '../../utils/context/authContext';
 function Home() {
   const [publicPrayers, setPrayer] = useState([]);
   const { user } = useAuth();
-  useEffect(() => {
+
+  const loadPrayers = () => {
     getPrayers().then((setPrayer));
+  };
+
+  useEffect(() => {
+    loadPrayers();
   }, []);
+
+  // useEffect(() => {
+  //   getPrayers().then((setPrayer));
+  // }, []);
 
   return (
     <article className="prayers">
@@ -27,12 +36,11 @@ function Home() {
             content={publicPrayer.content}
             firstName={user.first_name}
             lastName={user.last_name}
-            onUpdate={getPrayers}
+            onUpdate={loadPrayers}
           />
         </section>
       ))}
     </article>
   );
 }
-
 export default Home;

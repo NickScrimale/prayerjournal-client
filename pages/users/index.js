@@ -11,7 +11,6 @@ function Home() {
   useEffect(() => {
     getSingleUser(user.uid).then((setJournalUsers));
   }, []);
-  // console.warn(user);
   return (
     <>
       <article className="users">
