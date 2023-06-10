@@ -30,6 +30,9 @@ export default function NavBar() {
             <Link passHref href="/prayers">
               <Nav.Link>Prayers</Nav.Link>
             </Link>
+            <Link passHref href="/versions">
+              <Nav.Link>Version Manager</Nav.Link>
+            </Link>
             <Button variant="danger" onClick={signOut}>
               Sign Out
             </Button>
