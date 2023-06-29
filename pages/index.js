@@ -30,6 +30,7 @@ function Home() {
 
   return (
     <article className="verses">
+      <title>Prayer Journal</title>
       <h1>Verses</h1>
       <Link href="/verses/new" passHref>
         <Button variant="info">Add a Verse</Button>
