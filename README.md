@@ -37,6 +37,7 @@ You can start editing the page by modifying `pages/index.js`. The page auto-upda
 
 spicy meataball
 
+
 <img width="1043" alt="Screen Shot 2022-07-06 at 11 18 45 AM" src="https://user-images.githubusercontent.com/29741570/177612501-c2628f18-4bbd-4de9-aae6-27ffba1172d6.png">
         
 ## Learn More about Next.js
