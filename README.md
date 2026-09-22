@@ -32,6 +32,7 @@ ___
 
 You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
+
 **NOTES:** 
 - If you see the following error, you did not follow all the setup steps correctly and failed to add your Firebase creds. Go back and do that NOW.
 
